@@ -1,3 +1,3 @@
-# Restaurant-Page
+# Todo-List
 
-Restaurant page created with HTML, CSS and JS.
+Todo list application created with HTML, CSS and JS.

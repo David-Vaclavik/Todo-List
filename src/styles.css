@@ -10,8 +10,7 @@
 
 body {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     font-family: "Inter", sans-serif;
     /* font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
     background-color: oklch(20% 0 0);
@@ -37,121 +36,76 @@ h1 {
 /* ================================== Reset ends here =================================== */
 
 
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100vw;
-    padding: 20px;
-    font-size: 40px;
-    background-color: rgb(122, 115, 6);
-    background-color: oklch(10% 0 0);
-    color: oklch(90% 0 0);
-}
-
-nav {
-    display: flex;
-    gap: 20px;
-    /* background-color: brown; */
-}
-
 nav button {
     background-color: transparent;
     border: none;
-    border-radius: 10px;
-    color: oklch(90% 0 0);
-    padding: 10px 20px;
-    font-weight: 700;
-    font-size: inherit;                   /* Inherits from nav/header */
+    color: oklch(80% 0 0);
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    border-radius: 8px;
+    text-align: left;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 nav button:hover {
-    background-color: oklch(30% 0 0);
+    background-color: oklch(36% 0 0);
+    color: oklch(95% 0 0);
+    transform: translateX(4px);
 }
 
 nav button:active {
-    background-color: oklch(40% 0 0);
+    transform: translateX(2px);
+    background-color: oklch(18% 0 0);
 }
 
-nav button:focus {
-    outline: 2px solid rgb(114, 114, 114);
-    outline-offset: 2px;
+nav button.active {
+    background-color: oklch(35% 0 0);
+    color: oklch(98% 0 0);
+    font-weight: 600;
 }
-
-#content {
-    display: flex;
-    flex: 1 1 0;
-    justify-content: center;
-    align-items: flex-start;
-
-    width: 100%;                  /* Use 100% instead of 100vw */
-    min-height: 70vh;             /* Minimum height instead of square aspect */
-    /* background-image: url('./homepage-img.jpg'); */
-    background-size: cover;       /* Scales to cover, maintains aspect ratio */
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-
-    background-color: rgb(173, 69, 69);
+/*
+nav button.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: oklch(70% 0.15 270);
+    border-radius: 0 2px 2px 0;
 }
+*/
 
-#content h2 {
-    padding: 20px;
-    margin-top: 50px;
-    font-size: 80px;
-    font-weight: 800;
-    color: oklch(58.602% 0.23574 28.785);
-
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-}
-
-#content .menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-    padding: 50px;
-    width: 800px;
-    background-color: brown;
-}
-
-#content .item {
+nav {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    padding: 20px;
-    width: 300px;
+    /* justify-content: center; */
+    /* gap: 20px; */
 
-    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    width: 20%;
+    background-color: oklch(16% 0 0);
 }
 
-#content .about {
+.projects {
     display: flex;
-    align-self: center;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
+    /* gap: 20px; */
 
-    background-color: rgb(69, 27, 107);
-    background-color: brown;
+    background-color: rgb(12, 58, 58);
 }
 
-.restaurant-info {
+main {
+    display: flex;
+
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    background-color: rgb(43, 68, 20);
+    background-color: oklch(26% 0 0);
 }
-
-
-
-
 
 
