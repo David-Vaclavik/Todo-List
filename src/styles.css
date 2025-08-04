@@ -1,0 +1,157 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    line-height: calc(1em + 0.5rem); /*? experimental */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    /* font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+    background-color: oklch(20% 0 0);
+    color: oklch(95% 0 0);
+
+    min-height: 100vh;
+}
+
+p {
+    max-width: 75ch;
+    /* Important */
+}
+
+input, button, textarea, select, dialog {
+    font: inherit;
+}
+
+h1 {
+    font-size: 72px;
+    letter-spacing: 4px;
+}
+
+/* ================================== Reset ends here =================================== */
+
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    padding: 20px;
+    font-size: 40px;
+    background-color: rgb(122, 115, 6);
+    background-color: oklch(10% 0 0);
+    color: oklch(90% 0 0);
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    /* background-color: brown; */
+}
+
+nav button {
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+    color: oklch(90% 0 0);
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: inherit;                   /* Inherits from nav/header */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+nav button:hover {
+    background-color: oklch(30% 0 0);
+}
+
+nav button:active {
+    background-color: oklch(40% 0 0);
+}
+
+nav button:focus {
+    outline: 2px solid rgb(114, 114, 114);
+    outline-offset: 2px;
+}
+
+#content {
+    display: flex;
+    flex: 1 1 0;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;                  /* Use 100% instead of 100vw */
+    min-height: 70vh;             /* Minimum height instead of square aspect */
+    /* background-image: url('./homepage-img.jpg'); */
+    background-size: cover;       /* Scales to cover, maintains aspect ratio */
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+    background-color: rgb(173, 69, 69);
+}
+
+#content h2 {
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 80px;
+    font-weight: 800;
+    color: oklch(58.602% 0.23574 28.785);
+
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
+#content .menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 50px;
+    width: 800px;
+    background-color: brown;
+}
+
+#content .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 20px;
+    width: 300px;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#content .about {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+
+    background-color: rgb(69, 27, 107);
+    background-color: brown;
+}
+
+.restaurant-info {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
+
