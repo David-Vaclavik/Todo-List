@@ -10,13 +10,12 @@ import {Project} from "./project.js";
 //     homepage();
 // })
 
-// console.log(test);
-
 const app = new TodoUI();
 app.init();
 
-const pro = new Project("Cars");
-pro.test();
+//! Projects not yet implemented - WIP
+// const pro = new Project("Cars");
+// pro.test();
 
 
 
@@ -27,7 +26,7 @@ src/
 ├── template.html     // HTML template - ✅
 ├── dom.js            // DOM manipulation - ✅
 ├── todo.js           // Main app logic & Todo class/data model - ✅
-├── project.js        // Project class (if using projects)
+├── project.js        // Project class (if using projects) - ✅
 
 ├── storage.js        // localStorage handling
 ├── domUtils.js       // Reusable DOM functions
