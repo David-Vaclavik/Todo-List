@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=block"
+        rel="stylesheet">
+<script defer src="main.js"></script></head>
+
+<body>
+
+    <nav>
+        <button class="Home" data-home>Home</button>
+        <button class="Today" data-today>Today</button>
+        <button class="Week" data-week>Week</button>
+
+        <h2>Projects</h2>
+
+        <div class="projects">
+            <!-- <h2>Projects</h2> -->
+            <!-- <button class="General" data-project-button>General</button> -->
+            <!-- <button class="Shopping" data-project-button>Shopping</button> -->
+            <!-- <button class="Appointment" data-project-button>Appointment</button> -->
+        </div>
+
+        <button data-add-project>+ Add Project</button>
+
+        <dialog data-project-modal>
+            <form method="dialog" class="project-form">
+                <label for="project-name">Project Name:</label>
+                <input id="project-name" name="project-name" type="text" required autofocus>
+                <div class="form-buttons">
+                    <button class="submit-button" type="submit">Add</button>
+                    <button class="close-button" type="button" data-close-project-modal>Cancel</button>
+                </div>
+            </form>
+        </dialog>
+    </nav>
+
+    <main>
+
+        <div class="content">
+            <!-- 
+            <div class="todo">
+                <input type="checkbox" class="todo-checkbox">
+                <h3>Todo Title</h3>
+                <button class="edit-btn">Edit</button>
+                <button class="remove-btn">Remove</button>
+            </div>
+            -->
+        </div>
+
+        <dialog data-modal>
+            <form method="dialog" class="todo-form">
+                <div class="label-input">
+                    <label for="title"></label>
+                    <input type="text" name="title" id="title" placeholder="Title" required>
+                </div>
+                <div class="label-input">
+                    <label for="description"></label>
+                    <input type="text" name="description" id="description" placeholder="Description">
+                </div>
+                <div class="label-input label-date">
+                    <label for="due-date">Due date:</label>
+                    <input type="date" name="due-date" id="due-date" />
+                </div>
+
+                <!-- Priority Radio Buttons -->
+                <div class="label-input">
+                    <div class="priority-container">
+                        <label class="priority-label">Priority:</label>
+                        <div class="radio-group">
+                            <div class="radio-option priority-low">
+                                <input type="radio" id="priority-low" name="priority" value="low" checked>
+                                <label for="priority-low">Low</label>
+                            </div>
+                            <div class="radio-option priority-medium">
+                                <input type="radio" id="priority-medium" name="priority" value="medium">
+                                <label for="priority-medium">Medium</label>
+                            </div>
+                            <div class="radio-option priority-high">
+                                <input type="radio" id="priority-high" name="priority" value="high">
+                                <label for="priority-high">High</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button class="submit-button" type="submit">Submit</button>
+                    <button class="close-button" type="button" data-close-modal>Close</button>
+                </div>
+            </form>
+        </dialog>
+    </main>
+
+
+
+
+</body>
+
+</html>
