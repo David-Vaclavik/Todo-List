@@ -36,7 +36,7 @@ h1 {
 /* ================================== Reset ends here =================================== */
 
 
-nav button, .addTodo-btn {
+nav button, .addTodo-btn, .removeProject-btn {
     background-color: transparent;
     border: none;
     color: oklch(80% 0 0);
@@ -51,14 +51,15 @@ nav button, .addTodo-btn {
     overflow: hidden;
 }
 
-nav button:hover, .addTodo-btn:hover {
+nav button:hover, .addTodo-btn:hover, .removeProject-btn:hover {
     background-color: oklch(36% 0 0);
     color: oklch(95% 0 0);
-    transform: translateX(4px);
+    transform: translateX(4px) scale(1.02);
+    box-shadow: 0 0 10px 8px oklch(25% 0.00185 286.031 / 0.4);
 }
 
-nav button:active, .addTodo-btn:active {
-    transform: translateX(2px);
+nav button:active, .addTodo-btn:active, .removeProject-btn:active {
+    transform: translateX(2px) scale(1.01);
     background-color: oklch(18% 0 0);
 }
 
@@ -67,18 +68,6 @@ nav button.active {
     color: oklch(98% 0 0);
     font-weight: 600;
 }
-/*
-nav button.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 3px;
-    background-color: oklch(70% 0.15 270);
-    border-radius: 0 2px 2px 0;
-}
-*/
 
 nav {
     display: flex;
@@ -93,60 +82,64 @@ nav {
     background-color: oklch(16% 0 0);
 }
 
+nav h2 {
+    margin: 5px 0 10px;
+    cursor: default;
+}
+
 .projects {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-bottom: 10px;
-
-    /* background-color: rgb(12, 58, 58); */
 }
 
 button[data-add-project] {
     font-size: 28px;
     font-weight: 600;
-    /* color: oklch(80% 0 0); */
-    /* border: solid 1px oklch(60% 0 0); */
+}
+
+.project-form label {
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .project-form>.form-buttons> button {
     text-align: center;
+    margin-top: 10px;
 }
 
 main {
     display: flex;
 
-    padding: 40px;
+    padding: 20px;
     width: 100%;
+    box-shadow: 0 2px 8px 0 oklch(0% 0 0 / 0.28), 0 1.5px 4px 0 oklch(0% 0 0 / 0.12);
     background-color: oklch(26% 0 0);
 }
 
 .content {
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-end; */
-    /* align-items: flex-end; */
     gap: 10px;
     width: 100%;
-    /* background-color: rgb(7, 66, 30); */
 }
 
 .todo {
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     gap: 10px;
     width: 100%;
     padding: 10px 15px;
     border-radius: 5px;
 
-    /* background-color: brown; */
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px 0 oklch(0% 0 0 / 0.18), 0 1.5px 4px 0 oklch(0% 0 0 / 0.12);
     background-color: oklch(20% 0 0);
 }
 
 .todo h3 {
     width: 100%;
-    /* background-color: rgb(91, 97, 3); */
 }
 
 /* Date */
@@ -155,7 +148,9 @@ main {
 }
 
 .todo:hover {
-    background-color: oklch(22% 0 0);
+    box-shadow: 0 8px 24px oklch(0% 0 0 / 0.28), 0 2px 8px oklch(0% 0 0 / 0.18);
+    transform: translateY(-1px) scale(1.01);
+    background-color: oklch(25% 0.005 270);
 }
 
 /* Hide default checkbox */
@@ -169,7 +164,6 @@ main {
     background-color: oklch(26% 0 0);
     cursor: pointer;
     position: relative;
-    /* margin-right: 12px; */
     transition: all 0.2s ease;
 }
 
@@ -181,13 +175,13 @@ main {
 
 /* Checked state */
 .todo-checkbox:checked {
-    background-color: oklch(60% 0.15 270);  /* Purple */
+    background-color: oklch(60% 0.15 270);
     border-color: oklch(60% 0.15 270);
 }
 
 /* Change entire todo background when checked */
 .todo:has(.todo-checkbox:checked) {
-    background-color: oklch(20% 0 0);  /* Darker background */
+    background-color: oklch(20% 0 0);
     opacity: 0.6;
 }
 
@@ -212,9 +206,7 @@ main {
 
 .details-btn {
     padding: 1px 8px;
-    /* font-size: 16px; */
     font-weight: 600;
-    /* letter-spacing: 1px; */
     color: oklch(80% 0 0);
     background-color: transparent;
     border: solid 1px oklch(60% 0 0);
@@ -262,7 +254,7 @@ main {
     color: oklch(60% 0.2 25);
 }
 
-.addTodo-btn {
+.addTodo-btn, .removeProject-btn {
     padding: 10px;
     font-size: 24px;
     font-weight: 600;
@@ -270,6 +262,22 @@ main {
 
 .addTodo-btn:active {
     background-color: oklch(40% 0 0);
+}
+
+.removeProject-btn {
+    text-align: center;
+    background-color: oklch(50% 0.12 25);
+    color: oklch(98% 0 0);
+}
+
+.removeProject-btn:hover {
+    background-color: oklch(50% 0.16 25);
+    color: oklch(98% 0 0);
+}
+
+.removeProject-btn:active {
+    background-color: oklch(50% 0.2 25);
+    color: oklch(100% 0 0);
 }
 
 /* ======================= MODAL ========================= */
@@ -357,7 +365,6 @@ form label {
 }
 
 .label-date label {
-    /* width: 100%; */
     margin-right: 10px;
     white-space: nowrap;
     font-weight: 600;
@@ -389,27 +396,8 @@ input[type="date"]::-moz-calendar-picker-indicator {
     cursor: pointer;
 }
 
-/* Priority radio buttons */
-/*
-fieldset {
-    display: flex;
-    flex-direction: row;
-    border: none;
-    padding: 0;
-    margin: 0;
-}
-
-legend {
-    font-weight: 600;
-    color: oklch(80% 0 0);
-    margin-bottom: 8px;
-    padding: 0;
-}
-*/
-
 .priority-container {
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
     gap: 16px;
     width: 100%;
@@ -418,8 +406,6 @@ legend {
 .priority-label {
     font-weight: 600;
     color: oklch(95% 0 0);
-    /* flex-shrink: 0; */
-    /* min-width: 80px; */
 }
 
 .radio-group {
@@ -441,11 +427,8 @@ legend {
     appearance: none;
     width: 24px;
     height: 24px;
-    /* min-width: 20px; */
-    /* min-height: 20px; */
     flex-shrink: 0;        
     padding: 0;
-    /* border: 2px solid oklch(40% 0 0); */
     border: none;
     border-radius: 50%;
     background-color: oklch(26% 0 0);
@@ -459,22 +442,9 @@ legend {
     background-color: oklch(16% 0 0);
 }
 
-/* .radio-option input[type="radio"]:checked {
-    background-color: oklch(60% 0.15 270);
-    border-color: oklch(60% 0.15 270);
-} */
-
 .radio-option input[type="radio"]:checked::after {
-    /* content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 6px;
-    height: 6px; */
-    /* background-color: white; */
     background-color: transparent;
     border-radius: 50%;
-    /* transform: translate(-50%, -50%); */
 }
 
 .radio-option label {
@@ -489,31 +459,25 @@ legend {
 
 .priority-low input[type="radio"]:checked {
     background-color: oklch(70% 0.25 120); /* Green */
-    /* border-color: oklch(60% 0.15 120); */
 }
 
 .priority-medium input[type="radio"]:checked {
     background-color: oklch(70% 0.25 60); /* Yellow */
-    /* border-color: oklch(60% 0.15 60); */
 }
 
 .priority-high input[type="radio"]:checked {
     background-color: oklch(70% 0.26 27); /* Red */
-    /* border-color: oklch(60% 0.15 15); */
 }
 
 .low {
-    /* background-color: oklch(70% 0.25 120); */
     border-left: 5px solid oklch(70% 0.25 120); /* Green */
 }
 
 .medium {
-    /* background-color: oklch(70% 0.25 60); */
     border-left: 5px solid oklch(70% 0.25 60); /* Yellow */
 }
 
 .high {
-    /* background-color: oklch(70% 0.26 27); */
     border-left: 5px solid oklch(70% 0.30 27); /* Red */
 }
 

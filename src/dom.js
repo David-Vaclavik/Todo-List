@@ -1,4 +1,4 @@
-import {storage, Todo, TodoStorage} from "./todo.js";
+import {storage, projectsFromStorage, Todo, TodoStorage} from "./todo.js";
 import { format, parseISO, parse, isAfter, isBefore, addDays, startOfDay } from "date-fns";
 
 class TodoUI {
@@ -8,7 +8,8 @@ class TodoUI {
   }
 
   init() {
-    TodoUI.render()
+    TodoUI.renderProjects();
+    TodoUI.render();
     this.bindEvents()
   }
 
@@ -17,7 +18,6 @@ class TodoUI {
     div.className = `todo ${priority}`;
     div.id = id;
 
-    //checkbox
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.className = 'todo-checkbox';
@@ -32,6 +32,8 @@ class TodoUI {
     span.textContent = dueDate;
     div.appendChild(span);
 
+    //! Future feature
+    /*
     const detailsBtn = document.createElement('button');
     detailsBtn.className = 'details-btn';
     detailsBtn.innerHTML = 'DETAILS';
@@ -48,6 +50,7 @@ class TodoUI {
       </svg>
     `;
     div.appendChild(editBtn);
+    */
 
     const removeBtn = document.createElement('button');
     removeBtn.className = 'remove-btn';
@@ -65,28 +68,33 @@ class TodoUI {
   }
 
   static createProjectButton(buttonName) {
-    console.log("test");
-
     const projects = document.querySelector('.projects');
 
     const projectBtn = document.createElement('button');
     projectBtn.className = buttonName;
+    projectBtn.setAttribute('data-project-button', '');
     projectBtn.innerHTML = buttonName;
     projects.appendChild(projectBtn);
   }
 
-  //! WIP
+  static renderProjects() {
+    const projectsContainer = document.querySelector('.projects');
+    projectsContainer.innerHTML = '';
+
+    projectsFromStorage.forEach(projectName => {
+      TodoUI.createProjectButton(projectName);
+    });
+  }
+
   static render(tempStorage) {
     // Main DOM manipulation here
     // Renders all todos from storage
     const content = document.querySelector('.content');
 
-    // Clear container before appending
     content.innerHTML = ''
 
     //  Render all todos from storage
     const currentStorage = tempStorage ? tempStorage : storage;
-
     currentStorage.forEach(item => {
         const todoItem = TodoUI.createTodoItem(item.id, item.completed, item.title, item.dueDate, item.priority);
         content.appendChild(todoItem);
@@ -97,16 +105,34 @@ class TodoUI {
     addTodo.dataset.openModal = '';
     addTodo.textContent = '+ Add Todo';
     content.appendChild(addTodo);
+
+    // Remove project button if there are no projects
+    console.log("this is currentStorage: ", currentStorage);
+    if (currentStorage.length === 0) {
+      console.log("there is no storage");
+
+      const removeProjectBtn = document.createElement('button');
+      removeProjectBtn.className = 'removeProject-btn';
+      removeProjectBtn.dataset.removeProject = '';
+      removeProjectBtn.textContent = '- Remove Project';
+      content.appendChild(removeProjectBtn);
+    }
   }
 
   /*
-    <div class="content">
-        <div class="todo">
-            <input type="checkbox" class="todo-checkbox">
-            <h3>Todo Title</h3>
-            <button class="edit-btn">Edit</button>
-            <button class="remove-btn">Remove</button>
-        </div>
+    Example HTML structure for a todo item:
+    <div class="todo high" id="1">
+      <input type="checkbox" class="todo-checkbox" checked>
+      <h3>Todo Title</h3>
+      <span>22 Aug 2025</span> - optional
+      <button class="details-btn">DETAILS</button> //! WIP
+      <button class="edit-btn"> //! WIP
+        <!-- SVG icon for edit -->
+      </button>
+      <button class="remove-btn">
+        <!-- SVG icon for remove -->
+      </button>
+    </div>
   */
 
   bindEvents() {
@@ -114,10 +140,8 @@ class TodoUI {
       const target = e.target
 
       //* Handle navigation buttons
-      if (target.closest('nav') && target.tagName === 'BUTTON' &&
-        !target.classList.contains('remove-btn') &&
-        !target.classList.contains('edit-btn')) {
-
+      //// tagName always needs uppercase
+      if (target.closest('nav') && target.tagName === 'BUTTON') {
         // Remove active from all nav buttons
         document.querySelectorAll('nav button').forEach(btn => {
           btn.classList.remove('active')
@@ -142,10 +166,14 @@ class TodoUI {
         TodoUI.render(storageWeek);
       }
 
-      //! WIP - Projects buttons
+      //* Handle any project button click
+      if (target.closest('[data-project-button]')) {
+        const projectName = target.innerHTML;
+        const storageProject = TodoStorage.getProject(storage, projectName);
+        TodoUI.render(storageProject);
+      }
 
-      //! WIP - Add Project
-      // const projectModal = document.getElementById('project-modal');
+      //* Handles Add Project Modal
       const projectModal = document.querySelector("[data-project-modal]");
       if (target.closest('[data-add-project]')) {
         if (projectModal) projectModal.showModal();
@@ -156,7 +184,7 @@ class TodoUI {
       }
 
 
-      //* Handles TODO element
+      //* Handles TODO element checkbox
       if (target.closest('.todo-checkbox')) {
 
         //TODO: make getId method
@@ -169,14 +197,14 @@ class TodoUI {
         if (todo) {
           todo.toggleComplete();
         }
-        console.log(todo.completed);
       }
 
+      //! Should add functionality for details and edit buttons
       // Details Button
       if (target.closest('.details-btn')) {
         console.log('Details Button');
         //TODO: Add details button functionality will be needed for edit too
-        // It will use the same modal
+        //TODO: It will use the same modal as the edit button
       }
 
       // Edit Button
@@ -198,14 +226,31 @@ class TodoUI {
 
         // Remove todo from array
         TodoStorage.removeTodo(todoId)
+
+        const activeButton = document.querySelector('.active');
+        if (activeButton) activeButton.click();
       }
 
-      //? WIP
-      if (target.closest('.addTodo-btn')) {
-        console.log("add Todo");
+      // Remove project button
+      if (target.closest('[data-remove-project]')) {
+        // Selects project button based on active class
+        let activeButton;
+        const activeNav = document.querySelector('.active')
+        if (activeNav) {
+          const classes = Array.from(activeNav.classList);
+          activeButton = classes[0];
+        }
+
+        // Removes from DOM
+        activeNav.remove();
+
+        // Removes from projectsFromStorage
+        TodoStorage.removeProject(activeButton);
+
+        TodoUI.render();
       }
 
-      //* Handle modal open
+      //* Handle add todo modal open
       if (target.hasAttribute('data-open-modal') || target.closest('[data-open-modal]')) {
         const modal = document.querySelector("[data-modal]");
         if (modal) {
@@ -213,7 +258,7 @@ class TodoUI {
         }
       }
 
-      //* Handle modal close
+      //* Handle add todo modal close
       if (target.hasAttribute('data-close-modal') || target.closest('[data-close-modal]')) {
         const modal = document.querySelector("[data-modal]");
         if (modal) {
@@ -235,7 +280,6 @@ class TodoUI {
     })
     */
 
-    //TODO: Projects modal submit
     const projectModal = document.querySelector("[data-project-modal]");
     const projectForm = document.querySelector('.project-form');
 
@@ -246,6 +290,11 @@ class TodoUI {
 
       TodoUI.createProjectButton(projectName);
 
+      // Add to localStorage 
+      projectsFromStorage.push(projectName);
+      console.log(projectsFromStorage);
+      localStorage.setItem("projects", JSON.stringify(projectsFromStorage));
+
       projectForm.reset();
       projectModal.close();
     })
@@ -253,11 +302,14 @@ class TodoUI {
 
     // Keep form submission and click outside main event listener
     const modal = document.querySelector("[data-modal]")
-    // const form = document.querySelector('form');
     const form = document.querySelector('.todo-form');
 
-    //** Initial ID - starts from 7 because we have few examples in storage = []
-    let id = 7;
+    //? Maybe should be in todo.js ?
+    const seedId = 7; // Start from 7 to avoid conflicts with demo data
+    if (!localStorage.getItem("id")) {
+      localStorage.setItem("id", JSON.stringify(seedId));
+    }
+    let id = JSON.parse(localStorage.getItem("id"));
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -272,36 +324,35 @@ class TodoUI {
       // Radio input for priority
       const formData = new FormData(form);
       const priority = formData.get('priority'); // 'low', 'medium', or 'high'
-      // console.log('Selected priority:', priority);
+
+      // Assigns project based on active class
+      //? Maybe should be in todo.js ?
+      let project = 'General'
+      const activeNav = document.querySelector('.active')
+      if (activeNav) {
+        const classes = Array.from(activeNav.classList); 
+        project = classes[0];
+      }
 
       // Add todo to storage
-      TodoStorage.addTodo(id, titleInput, descriptionInput, dueDate, priority)
+      TodoStorage.addTodo(id, titleInput, descriptionInput, dueDate, priority, project)
       console.log(storage);
 
-      //TODO: if in TODAY after submit it will go to HOME
-      // render after add to storage
-      TodoUI.render();
+      // render after add to storage - old Way
+      ///// TodoUI.render();
 
-      //** increments ID each time a book is added
+      // Renders active button
+      if (!activeNav) project = 'Home';
+      const activeButton = document.querySelector(`.${project}`);
+      if (activeButton) activeButton.click();
+
+      //** increments ID each time a book is added and stores it in localStorage
       id++;
+      localStorage.setItem('id', JSON.stringify(id));
+
       form.reset();
       modal.close();
     });
-
-    /*
-    // Closes modal when clicked outside of the modal
-    modal.addEventListener("click", e => {
-      const dialogDimensions = modal.getBoundingClientRect()
-      if (
-        e.clientX < dialogDimensions.left ||
-        e.clientX > dialogDimensions.right ||
-        e.clientY < dialogDimensions.top ||
-        e.clientY > dialogDimensions.bottom
-      ) {
-        modal.close()
-      }
-    })
-    */
 
     // Closes any modal when clicked outside of it
     document.querySelectorAll('dialog').forEach(modal => {
